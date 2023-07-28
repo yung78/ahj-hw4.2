@@ -1,0 +1,42 @@
+import puppeteer from 'puppeteer';
+
+jest.setTimeout(15000);
+
+describe('Test validation form', () => {
+  let browser;
+  let page;
+
+  beforeEach(async () => {
+    browser = await puppeteer.launch({
+      headless: false,
+      slowMo: 100,
+      devtools: true,
+    });
+
+    page = await browser.newPage();
+  });
+
+  test('validation, if card number is valid: ".answer.valid" add ".valid_active"', async () => {
+    await page.goto('http://localhost:9000');
+    await page.waitForSelector('.pay_form');
+
+    await page.locator('input').fill('2345 6789 1234 5678');
+    await page.locator('button').click();
+
+    await page.waitForSelector('.answer.valid.valid_active');
+  });
+
+  test('---//---//--- not valid: ".answer.not_valid" add ".valid_active"', async () => {
+    await page.goto('http://localhost:9000');
+    await page.waitForSelector('.pay_form');
+
+    await page.locator('input').fill('2345 6789 1234 5679');
+    await page.locator('button').click();
+
+    await page.waitForSelector('.answer.not_valid.valid_active');
+  });
+
+  afterEach(async () => {
+    await browser.close();
+  });
+});
