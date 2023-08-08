@@ -1,5 +1,5 @@
-import puppeteer from 'puppeteer';
 import { fork } from 'child_process';
+import puppeteer from 'puppeteer';
 
 jest.setTimeout(90000);
 
@@ -16,7 +16,7 @@ describe('Test validation form', () => {
         if (message === 'ok') {
           resolve();
         } else {
-          reject()
+          reject();
         }
       });
     });
@@ -52,6 +52,5 @@ describe('Test validation form', () => {
 
   afterAll(async () => {
     await browser.close();
-    await server.off
   });
 });
