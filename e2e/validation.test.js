@@ -52,5 +52,6 @@ describe('Test validation form', () => {
 
   afterAll(async () => {
     await browser.close();
+    await server.kill();
   });
 });
